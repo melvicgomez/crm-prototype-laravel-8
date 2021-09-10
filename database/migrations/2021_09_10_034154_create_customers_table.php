@@ -17,7 +17,9 @@ class CreateCustomersTable extends Migration
             $table->string('cust_code', 255)->primary();
             $table->string('first_name', 255);
             $table->string('last_name', 255);
-            $table->string('email', 255);
+            $table->string('email', 100);
+            $table->string('phone_number', 50);
+            $table->string('address', 255);
             $table->date('date_of_birth');
             $table->timestamps();
         });
