@@ -55,23 +55,27 @@ class CustomerController extends Controller
      */
     public function index(Request $request)
     {
-        $page = $request->page ?: 20;
         $search = $request->search;
         $orderBy = $request->orderBy ?: 'last_name';
+        $orderByDirection = $request->orderByDirection ?: 'desc';
 
-        $customers = Customer::orderBy($orderBy);
+        $customers = Customer::orderBy($orderBy, $orderByDirection);
         if (!is_null($request->search)) {
-            $customers
-                ->where('cust_code', 'LIKE', '%' . $search . '%')
-                ->orWhere('last_name', 'LIKE', '%' . $search . '%')
-                ->orWhere('first_name', 'LIKE', '%' . $search . '%')
-                ->orWhere('email', 'LIKE', '%' . $search . '%')
-                ->orWhere('phone_number', 'LIKE', '%' . $search . '%')
-                ->orWhere('address', 'LIKE', '%' . $search . '%')
-                ->orWhere('date_of_birth', 'LIKE', '%' . $search . '%');
+            $customers->where('cust_code', 'LIKE', '%' . $search . '%');
+            $keywords = explode(" ", $search);
+            foreach ($keywords as $keyword) {
+                $customers
+                    ->orWhere('cust_code', 'LIKE', '%' . $keyword . '%')
+                    ->orWhere('last_name', 'LIKE', '%' . $keyword . '%')
+                    ->orWhere('first_name', 'LIKE', '%' . $keyword . '%')
+                    ->orWhere('email', 'LIKE', '%' . $keyword . '%')
+                    ->orWhere('phone_number', 'LIKE', '%' . $keyword . '%')
+                    ->orWhere('address', 'LIKE', '%' . $keyword . '%')
+                    ->orWhere('date_of_birth', 'LIKE', '%' . $keyword . '%');
+            }
         }
 
-        return $customers->paginate($page);
+        return $customers->paginate();
     }
 
     /**
