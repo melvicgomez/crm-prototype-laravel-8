@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Validator;
 class CustomerController extends Controller
 {
 
-
     public function validateRequestParams($request)
     {
         // validate all request params
@@ -46,7 +45,6 @@ class CustomerController extends Controller
         );
         return $validator;
     }
-
 
     /**
      * Display a listing of the resource.
@@ -129,14 +127,7 @@ class CustomerController extends Controller
         abort(400);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Customer  $customer
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function updateCustomer(Request $request, $id)
     {
         $validator = $this->validateRequestParams($request);
         if (!$validator->fails()) {

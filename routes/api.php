@@ -16,4 +16,5 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => ['guest']], function () {
     Route::resource('/customer', CustomerController::class);
+    Route::post('/update-customer/{id}', [CustomerController::class, 'updateCustomer']);
 });
