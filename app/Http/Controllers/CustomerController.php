@@ -75,7 +75,7 @@ class CustomerController extends Controller
             }
         }
 
-        return $customers->paginate();
+        return $customers->paginate(10);
     }
 
     /**
