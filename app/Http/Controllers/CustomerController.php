@@ -93,6 +93,7 @@ class CustomerController extends Controller
                 $request->first_name .
                 Carbon::parse($request->date_of_birth)->format('Ymd'));
 
+            $cust_code = preg_replace('/\s+/', '', $cust_code);
             $isExistingCustomer = Customer::where('cust_code', $cust_code)->first();
             // check if customer's cust_code already exists in the record.
             if (is_null($isExistingCustomer)) {
